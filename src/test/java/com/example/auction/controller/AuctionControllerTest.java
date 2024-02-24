@@ -11,12 +11,20 @@ import java.time.LocalDateTime;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AuctionControllerTest {
     @Test
-    void shouldAddAuction(@Autowired WebTestClient testClient) {
+    void shouldAddAuctionToDb(@Autowired WebTestClient testClient) {
         testClient
                 .post()
                 .uri("/auction")
-                .bodyValue(new AuctionModel("test auction", 1.0, 1.0, "test description", LocalDateTime.now()))
+                .bodyValue(new AuctionModel("test auction", 1.1, 1.0, "test description", LocalDateTime.now()))
                 .exchange()
-                .expectStatus().isCreated();
+                .expectStatus().isOk();
+    }
+    @Test
+    void shouldDeleteAuction(@Autowired WebTestClient testClient){
+        testClient
+                .delete()
+                .uri("/auction/1")
+                .exchange()
+                .expectStatus().isNoContent();
     }
 }
