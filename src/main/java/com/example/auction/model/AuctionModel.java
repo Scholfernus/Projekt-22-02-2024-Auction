@@ -1,41 +1,37 @@
 package com.example.auction.model;
 
-import com.example.auction.category.Category;
+import com.example.auction.category.CategoryModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotEmpty;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.lang.NonNull;
+
 import java.time.LocalDateTime;
-import java.math.BigDecimal;
 
 @Entity
 public class AuctionModel {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
-private Integer id;
-@NonNull
+private Long id;
 @NotEmpty
 private String name;
-@NonNull
 @Digits(integer = 6, fraction=2)
 @DecimalMin(value = "0.01")
 @DecimalMax(value = "999999.99")
-private BigDecimal initialPrice;
-private BigDecimal currentPrice;
+private Integer initialPrice;
+private Integer currentPrice;
 private String description;
 private LocalDateTime endTime;
-
-    @NotNull
+@OneToMany(mappedBy = "auctions")
+ private SellerModel seller;
     @ManyToOne()
     @JoinColumn(name = "category_id")
-    private Category category;
+    private CategoryModel category;
     public AuctionModel() {
     }
 
-    public AuctionModel(String name, BigDecimal initialPrice, BigDecimal currentPrice, String description, LocalDateTime endTime) {
+    public AuctionModel(String name, Integer initialPrice, Integer currentPrice, String description, LocalDateTime endTime) {
         this.name = name;
         this.initialPrice = initialPrice;
         this.currentPrice = currentPrice;
@@ -43,11 +39,11 @@ private LocalDateTime endTime;
         this.endTime = endTime;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,19 +55,19 @@ private LocalDateTime endTime;
         this.name = name;
     }
 
-    public BigDecimal getInitialPrice() {
+    public Integer getInitialPrice() {
         return initialPrice;
     }
 
-    public void setInitialPrice(BigDecimal initialPrice) {
+    public void setInitialPrice(Integer initialPrice) {
         this.initialPrice = initialPrice;
     }
 
-    public BigDecimal getCurrentPrice() {
+    public Integer getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(BigDecimal currentPrice) {
+    public void setCurrentPrice(Integer currentPrice) {
         this.currentPrice = currentPrice;
     }
 
