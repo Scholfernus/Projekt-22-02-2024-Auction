@@ -2,6 +2,7 @@ package com.example.auction.controller;
 
 import com.example.auction.model.AuctionModel;
 import com.example.auction.repository.AuctionRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class AuctionController {
     }
 
     @PostMapping
-    public AuctionModel postAuction(@RequestBody AuctionModel modelAuction) {
+    public AuctionModel postAuction(@RequestBody @Valid AuctionModel modelAuction) {
         return auctionRepository.save(modelAuction);
     }
 
