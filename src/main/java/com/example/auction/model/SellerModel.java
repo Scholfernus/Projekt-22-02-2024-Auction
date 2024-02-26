@@ -48,4 +48,9 @@ public class SellerModel {
     public void setAuction(Set<AuctionModel> auction) {
         this.auction = auction;
     }
+    public Set<AuctionModel> getAuctions() {
+        return auction;
+    }
+
+
 }

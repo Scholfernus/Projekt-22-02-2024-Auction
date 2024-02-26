@@ -1,4 +1,4 @@
-package com.example.auction.category;
+package com.example.auction.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

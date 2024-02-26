@@ -1,42 +1,52 @@
 package com.example.auction.model;
 
-import com.example.auction.category.CategoryModel;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotEmpty;
-
+import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class AuctionModel {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
-@NotEmpty
-private String name;
-@Digits(integer = 6, fraction=2)
-@DecimalMin(value = "0.01")
-@DecimalMax(value = "999999.99")
-private Integer initialPrice;
-private Integer currentPrice;
-private String description;
-private LocalDateTime endTime;
-@OneToMany(mappedBy = "auctions")
- private SellerModel seller;
-    @ManyToOne()
-    @JoinColumn(name = "category_id")
-    private CategoryModel category;
-    public AuctionModel() {
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public AuctionModel(String name, Integer initialPrice, Integer currentPrice, String description, LocalDateTime endTime) {
+    @NotEmpty
+    private String name;
+
+    @NotNull
+    @DecimalMin(value = "0.01")
+    @DecimalMax(value = "999999.99")
+    private Double initialPrice;
+
+    @NotNull
+    @DecimalMin(value = "0.01")
+    @DecimalMax(value = "999999.99")
+    @Column(columnDefinition = "DECIMAL(10,2)")
+    private Double currentPrice;
+
+    @NotEmpty
+    private String description;
+
+    @Future
+    private LocalDateTime endTime;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id", nullable = false)
+    private SellerModel seller;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private CategoryModel category;
+
+    public AuctionModel(String name, Double initialPrice, Double currentPrice, String description, LocalDateTime endTime) {
         this.name = name;
         this.initialPrice = initialPrice;
         this.currentPrice = currentPrice;
         this.description = description;
         this.endTime = endTime;
+    }
+
+    public AuctionModel() {
     }
 
     public Long getId() {
@@ -55,19 +65,19 @@ private LocalDateTime endTime;
         this.name = name;
     }
 
-    public Integer getInitialPrice() {
+    public Double getInitialPrice() {
         return initialPrice;
     }
 
-    public void setInitialPrice(Integer initialPrice) {
+    public void setInitialPrice(Double initialPrice) {
         this.initialPrice = initialPrice;
     }
 
-    public Integer getCurrentPrice() {
+    public Double getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(Integer currentPrice) {
+    public void setCurrentPrice(Double currentPrice) {
         this.currentPrice = currentPrice;
     }
 
@@ -87,15 +97,19 @@ private LocalDateTime endTime;
         this.endTime = endTime;
     }
 
-    @Override
-    public String toString() {
-        return "AuctionModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", initialPrice=" + initialPrice +
-                ", currentPrice=" + currentPrice +
-                ", description='" + description + '\'' +
-                ", endTime=" + endTime +
-                '}';
+    public SellerModel getSeller() {
+        return seller;
+    }
+
+    public void setSeller(SellerModel seller) {
+        this.seller = seller;
+    }
+
+    public CategoryModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryModel category) {
+        this.category = category;
     }
 }
