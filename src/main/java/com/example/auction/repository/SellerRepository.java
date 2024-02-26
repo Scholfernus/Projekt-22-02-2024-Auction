@@ -5,6 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SellerRepository extends JpaRepository<SellerModel, Long> {
-
+public interface SellerRepository extends JpaRepository<SellerModel, Long> {
 }
