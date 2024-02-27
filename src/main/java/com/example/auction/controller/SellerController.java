@@ -2,6 +2,7 @@ package com.example.auction.controller;
 
 import com.example.auction.model.SellerModel;
 import com.example.auction.repository.SellerRepository;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ public class SellerController {
     }
 
     @PostMapping
-    public SellerModel CreateSeller(@RequestBody SellerModel sellerModel) {
+    public SellerModel CreateSeller(@RequestBody @Valid SellerModel sellerModel) {
         return sellerRepository.save(sellerModel);
     }
 
