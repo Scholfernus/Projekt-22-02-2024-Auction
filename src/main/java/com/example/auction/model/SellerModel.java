@@ -1,6 +1,8 @@
 package com.example.auction.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +12,8 @@ public class SellerModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sellerId;
+    @NotNull
+    @NotEmpty
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "seller_auction",
