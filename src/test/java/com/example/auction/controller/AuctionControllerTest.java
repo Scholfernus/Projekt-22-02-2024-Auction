@@ -15,7 +15,7 @@ class AuctionControllerTest {
         testClient
                 .post()
                 .uri("/auction")
-                .bodyValue(new AuctionModel("test auction", 1.1, 1.0, "test description", LocalDateTime.now()))
+                .bodyValue(new AuctionModel("test auction", 1.0, 10.0, "test description", LocalDateTime.now()))
                 .exchange()
                 .expectStatus().isOk();
     }
@@ -26,5 +26,14 @@ class AuctionControllerTest {
                 .uri("/auction/1")
                 .exchange()
                 .expectStatus().isNoContent();
+    }
+    @Test
+    void shouldCheckIfValidationIsWorking(@Autowired WebTestClient testClient){
+        testClient
+                .post()
+                .uri("/auction")
+                .bodyValue(new AuctionModel("test auction", 1.0,15.0,"test description",LocalDateTime.now()))
+                .exchange()
+                .expectStatus().isBadRequest();
     }
 }
