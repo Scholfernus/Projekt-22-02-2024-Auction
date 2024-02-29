@@ -34,10 +34,10 @@ public class AuctionController {
             auctionRepository.deleteById(id);
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
+}
 //    @DeleteMapping("/{id}")
 //    public ResponseEntity<Object> deleteAuction(@PathVariable int id) {
 //        return auctionRepository.findById(id)
@@ -47,4 +47,4 @@ public class AuctionController {
 //                }).orElseGet(() -> ResponseEntity.notFound().build());
 //    }
 //    inne rozwiązanie zadania delete
-}
+
