@@ -45,7 +45,14 @@ public class AuctionModel {
         this.description = description;
         this.endTime = endTime;
     }
-
+    public AuctionModel(String name, Double initialPrice, Double currentPrice, String description, LocalDateTime endTime, SellerModel seller) {
+        this.name = name;
+        this.initialPrice = initialPrice;
+        this.currentPrice = currentPrice;
+        this.description = description;
+        this.endTime = endTime;
+        this.seller = seller; // Przypisanie sprzedawcy do aukcji podczas tworzenia nowej aukcji
+    }
     public AuctionModel() {
     }
 
