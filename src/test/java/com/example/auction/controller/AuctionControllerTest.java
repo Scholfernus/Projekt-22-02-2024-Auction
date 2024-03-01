@@ -14,7 +14,7 @@ class AuctionControllerTest {
     void shouldAddAuctionToDb(@Autowired WebTestClient testClient) {
         testClient
                 .post()
-                .uri("/auction")
+                .uri("/auction/add")
                 .bodyValue(new AuctionModel("test auction", 1.0, 10.0, "test description", LocalDateTime.now()))
                 .exchange()
                 .expectStatus().isOk();
