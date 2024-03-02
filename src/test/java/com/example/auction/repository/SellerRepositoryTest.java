@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+// this is not very valid test it skips the Controller/Service layer where soem logic/validation is performed
+// this is useful only for checking the DB layer
 @SpringBootTest
 class SellerRepositoryTest {
 
