@@ -2,6 +2,7 @@ package com.example.auction.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -14,14 +15,11 @@ public class AuctionModel {
     private String name;
 
     @NotNull
+    @Digits(integer = 6, fraction = 2)
     @DecimalMin(value = "0.01")
     @DecimalMax(value = "999999.99")
     private Double initialPrice;
 
-    @NotNull
-    @DecimalMin(value = "0.01")
-    @DecimalMax(value = "999999.99")
-    @Column(columnDefinition = "DECIMAL(10,2)")
     private Double currentPrice;
 
     @NotEmpty
@@ -34,9 +32,20 @@ public class AuctionModel {
     @JoinColumn(name = "seller_id", nullable = false)
     private SellerModel seller;
 
-    @ManyToOne
+    @NotNull
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "category_id", nullable = false)
     private CategoryModel category;
+
+    public AuctionModel(String name, Double initialPrice, Double currentPrice, String description, LocalDateTime endTime, SellerModel seller, CategoryModel category) {
+        this.name = name;
+        this.initialPrice = initialPrice;
+        this.currentPrice = currentPrice;
+        this.description = description;
+        this.endTime = endTime;
+        this.seller = seller;
+        this.category = category;
+    }
 
     public AuctionModel(String name, Double initialPrice, Double currentPrice, String description, LocalDateTime endTime) {
         this.name = name;
@@ -45,6 +54,7 @@ public class AuctionModel {
         this.description = description;
         this.endTime = endTime;
     }
+
     public AuctionModel(String name, Double initialPrice, Double currentPrice, String description, LocalDateTime endTime, SellerModel seller) {
         this.name = name;
         this.initialPrice = initialPrice;
@@ -53,6 +63,7 @@ public class AuctionModel {
         this.endTime = endTime;
         this.seller = seller; // Przypisanie sprzedawcy do aukcji podczas tworzenia nowej aukcji
     }
+
     public AuctionModel() {
     }
 
