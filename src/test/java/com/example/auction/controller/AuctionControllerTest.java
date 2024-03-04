@@ -77,9 +77,11 @@ class AuctionControllerTest {
         testClient
                 .post()
                 .uri("/auction")
-                .bodyValue(new AuctionModel("test auction", 1.0, 15.0, "test description", LocalDateTime.now()))
+                .bodyValue(new AuctionModel("test auction", -1.0, 15.0, "test description", LocalDateTime.now()))
                 .exchange()
-                .expectStatus().isBadRequest();
+                .expectStatus().isBadRequest()
+                .expectBody().json("""
+                        {"type": "about:blanc"}""");
     }
     @Test
     void shouldReturn400whenUpdateAuctionWithWrongId(@Autowired WebTestClient testClient) {
