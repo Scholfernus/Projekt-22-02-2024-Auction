@@ -51,18 +51,6 @@ public class AuctionController {
 
     @PutMapping("/{id}")
     public AuctionModel updateAuction (@PathVariable Long id, @RequestBody AuctionModel modelUpdate){
-
-//        AuctionModel auctionNotFound = auctionRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(id, "auction not found"));
-//        auctionNotFound.setName(modelUpdate.getName());
-//        auctionNotFound.setCurrentPrice(modelUpdate.getCurrentPrice());
-//        auctionNotFound.setInitialPrice(modelUpdate.getInitialPrice());
-//        auctionNotFound.setDescription(modelUpdate.getDescription());
-//        auctionNotFound.setEndTime(modelUpdate.getEndTime());
-//        auctionNotFound.setSeller(modelUpdate.getSeller());
-//        auctionNotFound.setCategory(modelUpdate.getCategory());
-//        return auctionRepository.save(auctionNotFound);
-        // to też jest poprawna wersja
-
         return auctionRepository.save(findByIdAndUpdateFields(id, modelUpdate));
     }
 
