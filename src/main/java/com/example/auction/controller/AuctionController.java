@@ -1,5 +1,6 @@
 package com.example.auction.controller;
 
+import com.example.auction.CategoryNotFoundException;
 import com.example.auction.model.AuctionModel;
 import com.example.auction.model.CategoryModel;
 import com.example.auction.repository.AuctionRepository;
@@ -48,7 +49,13 @@ public class AuctionController {
     public List<AuctionModel> getAllAuction() {
         return auctionRepository.findAll();
     }
-
+@GetMapping("/searchByCategory")
+public List<AuctionModel>getAuctionCategoryById(@RequestParam("category") String categoryName){
+//   find category by name
+    CategoryModel category = categoryRepository.findByName(categoryName).orElseThrow(() -> new CategoryNotFoundException(("category" + categoryName + " not found")));
+//    find and return auctions by category
+    return auctionRepository.findByCategory(category);
+}
     @PutMapping("/{id}")
     public AuctionModel updateAuction (@PathVariable Long id, @RequestBody AuctionModel modelUpdate){
         return auctionRepository.save(findByIdAndUpdateFields(id, modelUpdate));
