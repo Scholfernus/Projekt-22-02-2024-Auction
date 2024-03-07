@@ -43,5 +43,13 @@ public class AuctionService {
                 .map(auctionFromRepo ->updateAuction(updateObject, auctionFromRepo))
                 .orElseThrow(()-> new ObjectNotFoundException(id, " auction not found"));
     }
-    private AuctionModel
+    private static AuctionModel updateAuction(AuctionModel updateObject, AuctionModel auctionFromRepo){
+        auctionFromRepo.setName(updateObject.getName());
+        auctionFromRepo.setCategory(updateObject.getCategory());
+        auctionFromRepo.setCurrentPrice(updateObject.getCurrentPrice());
+        auctionFromRepo.setInitialPrice(updateObject.getInitialPrice());
+        auctionFromRepo.setDescription(updateObject.getDescription());
+        auctionFromRepo.setEndTime(updateObject.getEndTime());
+        return auctionFromRepo;
+    }
 }
