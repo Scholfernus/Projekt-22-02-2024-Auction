@@ -25,7 +25,7 @@ public class AuctionService {
         return auctionRepository.findAll();
     }
 
-    List<AuctionModel> getAuctionByCategory(String categoryName) {
+    public List<AuctionModel> getAuctionByCategory(String categoryName) {
         return auctionRepository
                 .findByCategory(getCategoryByNameOrElseThrowException(categoryName));
     }
@@ -35,22 +35,24 @@ public class AuctionService {
                 .orElseThrow(() -> new CategoryNotFoundException("Category " + categoryName + " not exist"));
     }
 
-    public void save(AuctionModel auctionModel) {
-        auctionRepository.save(auctionModel);
-    }
 
-    AuctionModel saveAuction(AuctionModel auction) {
+    public AuctionModel saveAuction(AuctionModel auction) {
         return categoryRepository.findByName(auction.getCategory().getName())
                 .map(categoryModel -> setCategoryForAuctionAndSaveToRepo(auction, categoryModel))
                 .orElseThrow(() -> new CategoryNotFoundException("Category " + auction.getCategory().getName() + " not found"));
     }
 
+    //        Optional<CategoryModel> categoryByName = categoryRepository.findByName(modelAuction.getCategory().getName());
+//        CategoryModel categoryNotFound = categoryByName
+//                .orElseThrow(() -> new ObjectNotFoundException(modelAuction, "category not found"));
+//        return getAuctionModel(modelAuction, categoryNotFound);
+    //Ta powyższa metoda została zrobiona na początku, działa tak samo jak poniżej
     private AuctionModel setCategoryForAuctionAndSaveToRepo(AuctionModel auction, CategoryModel categoryModel) {
         auction.setCategory(categoryModel);
         return auctionRepository.save(auction);
     }
 
-    AuctionModel updateAuction(AuctionModel auction, Long id) {
+    public AuctionModel updateAuction(AuctionModel auction, Long id) {
         return auctionRepository.save(findAuctionByIdAndUpdateFields(id, auction));
     }
 
@@ -60,7 +62,7 @@ public class AuctionService {
                 .orElseThrow(() -> new ObjectNotFoundException(id, " auction not found"));
     }
 
-    private static AuctionModel updateAuction(AuctionModel updateObject, AuctionModel auctionFromRepo) {
+    private AuctionModel updateAuction(AuctionModel updateObject, AuctionModel auctionFromRepo) {
         auctionFromRepo.setName(updateObject.getName());
         auctionFromRepo.setCategory(updateObject.getCategory());
         auctionFromRepo.setCurrentPrice(updateObject.getCurrentPrice());
@@ -70,7 +72,7 @@ public class AuctionService {
         return auctionFromRepo;
     }
 
-    ResponseEntity<Object> deleteAuction(Long id) {
+    public ResponseEntity<Object> deleteAuction(Long id) {
         return auctionRepository.findById(id)
                 .map(auctionModel -> {
                     auctionRepository.deleteById(id);
@@ -78,4 +80,6 @@ public class AuctionService {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    public void save(AuctionModel auctionModel) {
+    }
 }
