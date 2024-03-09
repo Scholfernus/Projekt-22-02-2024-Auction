@@ -6,6 +6,7 @@ import com.example.auction.model.CategoryModel;
 import com.example.auction.repository.AuctionRepository;
 import com.example.auction.repository.CategoryRepository;
 import org.hibernate.ObjectNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,5 +52,12 @@ public class AuctionService {
         auctionFromRepo.setDescription(updateObject.getDescription());
         auctionFromRepo.setEndTime(updateObject.getEndTime());
         return auctionFromRepo;
+    }
+    ResponseEntity<Object> deleteAuction(Long id){
+        return auctionRepository.findById(id)
+                .map(auctionModel -> {
+                    auctionRepository.deleteById(id);
+                    return ResponseEntity.noContent().build();
+                }).orElseGet(()->ResponseEntity.notFound().build());
     }
 }
