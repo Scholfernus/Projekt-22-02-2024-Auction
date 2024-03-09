@@ -80,6 +80,15 @@ public class AuctionService {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    //    @DeleteMapping("/{id}")
+//    public ResponseEntity<Object> deleteAuction(@PathVariable int id) {
+//        return auctionRepository.findById(id)
+//                .map(auction -> {
+//                    auctionRepository.deleteById(id);
+//                    return ResponseEntity.noContent().build();
+//                }).orElseGet(() -> ResponseEntity.notFound().build());
+//    }
+//    inne rozwiązanie zadania delete
     public void save(AuctionModel auctionModel) {
     }
 }
